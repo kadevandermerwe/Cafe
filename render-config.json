@@ -1,0 +1,21 @@
+{
+  "buildCommand": "chmod +x ./render-scripts/build.sh && ./render-scripts/build.sh",
+  "startCommand": "chmod +x ./render-scripts/start.sh && ./render-scripts/start.sh",
+  "envVarGroups": [
+    {
+      "name": "portfolio-demo",
+      "envVars": [
+        {
+          "key": "FORCE_IN_MEMORY",
+          "value": "true",
+          "sync": false
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://placeholder:placeholder@localhost:5432/placeholder",
+          "sync": false
+        }
+      ]
+    }
+  ]
+}
