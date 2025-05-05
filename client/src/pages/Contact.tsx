@@ -7,7 +7,7 @@ import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 // Add Google Maps type definitions
 declare global {
   interface Window {
-    initMap: () => void;
+    initMap?: () => void;
     google: any;
   }
 }
