@@ -21,38 +21,75 @@ export default function Home() {
   useEffect(() => {
     document.title = "Rustic Table | Fine Dining Restaurant";
     
-    // Create staggered scroll animations for each section
-    const animateOnScroll = () => {
-      gsap.fromTo(
-        ".highlight-item", 
-        { y: 50, opacity: 0 },
-        { 
-          y: 0, 
-          opacity: 1, 
-          stagger: 0.15,
-          scrollTrigger: {
-            trigger: ".highlights-section",
-            start: "top 75%",
-          }
-        }
+    // Set up animations without ScrollTrigger
+    const setupAnimations = () => {
+      // Use IntersectionObserver instead of ScrollTrigger
+      const highlightsObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const items = document.querySelectorAll('.highlight-item');
+              items.forEach((item, index) => {
+                gsap.fromTo(
+                  item,
+                  { y: 50, opacity: 0 },
+                  { 
+                    y: 0, 
+                    opacity: 1, 
+                    duration: 0.6,
+                    delay: index * 0.15,
+                    ease: "power2.out" 
+                  }
+                );
+              });
+              
+              // Once animation is triggered, disconnect the observer
+              highlightsObserver.disconnect();
+            }
+          });
+        },
+        { threshold: 0.1 }
       );
       
-      gsap.fromTo(
-        ".testimonial-content", 
-        { scale: 0.9, opacity: 0 },
-        { 
-          scale: 1, 
-          opacity: 1, 
-          scrollTrigger: {
-            trigger: ".testimonials-section",
-            start: "top 80%",
-          }
-        }
+      const testimonialObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              gsap.fromTo(
+                ".testimonial-content",
+                { scale: 0.9, opacity: 0 },
+                { 
+                  scale: 1, 
+                  opacity: 1,
+                  duration: 0.6,
+                  ease: "power2.out" 
+                }
+              );
+              
+              // Once animation is triggered, disconnect the observer
+              testimonialObserver.disconnect();
+            }
+          });
+        },
+        { threshold: 0.1 }
       );
+      
+      // Observe the sections
+      const highlightsSection = document.querySelector('.highlights-section');
+      const testimonialsSection = document.querySelector('.testimonials-section');
+      
+      if (highlightsSection) {
+        highlightsObserver.observe(highlightsSection);
+      }
+      
+      if (testimonialsSection) {
+        testimonialObserver.observe(testimonialsSection);
+      }
     };
     
     if (typeof window !== 'undefined') {
-      animateOnScroll();
+      // Wait for DOM to be ready
+      setTimeout(setupAnimations, 100);
     }
   }, []);
 

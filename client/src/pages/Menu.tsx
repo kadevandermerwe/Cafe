@@ -1,13 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ChevronRight, Coffee, Utensils, Beef, Dessert } from "lucide-react";
-
-// Register GSAP plugins
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 type MenuCategory = "starters" | "mains" | "desserts" | "drinks";
 
@@ -27,29 +21,47 @@ export default function Menu() {
   useEffect(() => {
     document.title = "Menu | Rustic Table";
     
-    // Animate menu items when they come into view
-    const animateMenuItems = () => {
-      gsap.fromTo(
-        ".menu-item",
-        { y: 20, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          stagger: 0.1,
-          duration: 0.6,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: ".menu-grid",
-            start: "top 80%",
-          }
-        }
+    // Animate menu items when they come into view using Intersection Observer
+    const setupMenuAnimations = () => {
+      const menuObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const items = document.querySelectorAll('.menu-item');
+              items.forEach((item, index) => {
+                gsap.fromTo(
+                  item,
+                  { y: 20, opacity: 0 },
+                  { 
+                    y: 0, 
+                    opacity: 1,
+                    duration: 0.6,
+                    delay: index * 0.1,
+                    ease: "power2.out"
+                  }
+                );
+              });
+              
+              // Once animation is triggered, disconnect the observer
+              menuObserver.disconnect();
+            }
+          });
+        },
+        { threshold: 0.1 }
       );
+      
+      // Observe the menu grid
+      const menuGrid = document.querySelector('.menu-grid');
+      if (menuGrid) {
+        menuObserver.observe(menuGrid);
+      }
     };
     
     if (typeof window !== 'undefined') {
-      animateMenuItems();
+      // Wait for DOM to be ready
+      setTimeout(setupMenuAnimations, 100);
     }
-  }, []);
+  }, [activeTab]); // Re-run when active tab changes
 
   const menuItems: Record<MenuCategory, MenuItem[]> = {
     starters: [
