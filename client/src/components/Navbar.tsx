@@ -130,13 +130,13 @@ export default function Navbar() {
             <Link href="/contact" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium ${scrolled ? 'text-foreground' : 'text-white shadow-sm'} ${isActive("/contact")}`}>
               Contact
             </Link>
-            <a 
-              href="#book" 
-              className="nav-item button-primary group relative overflow-hidden"
+            <Link 
+              href="/booking" 
+              className={`nav-item button-primary group relative overflow-hidden ${isActive("/booking")}`}
             >
               <span className="relative z-10">Book a Table</span>
               <span className="absolute inset-0 translate-y-full bg-accent transition-transform duration-300 group-hover:translate-y-0"></span>
-            </a>
+            </Link>
           </div>
           
           {/* Mobile Menu Button */}
@@ -189,6 +189,7 @@ export default function Navbar() {
                   { text: "Menu", href: "/menu" },
                   { text: "About", href: "/about" },
                   { text: "Contact", href: "/contact" },
+                  { text: "Book a Table", href: "/booking" },
                 ].map((item, i) => (
                   <motion.div 
                     key={item.text}
@@ -210,20 +211,7 @@ export default function Navbar() {
                     </Link>
                   </motion.div>
                 ))}
-                <motion.div
-                  custom={4}
-                  variants={menuItemVariants}
-                  initial="closed"
-                  animate="open"
-                  exit="closed"
-                >
-                  <a 
-                    href="#book" 
-                    className="block py-3 px-4 rounded-lg text-center bg-primary text-white shadow-md hover:shadow-lg transition-all duration-300"
-                  >
-                    Book a Table
-                  </a>
-                </motion.div>
+
               </div>
             </motion.div>
           )}
