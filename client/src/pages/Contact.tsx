@@ -4,6 +4,14 @@ import { gsap } from "gsap";
 import { ChevronRight, Mail, MapPin, Phone, Clock, Send, User, MessageSquare } from "lucide-react";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 
+// Add Google Maps type definitions
+declare global {
+  interface Window {
+    initMap: () => void;
+    google: any;
+  }
+}
+
 export default function Contact() {
   const contactInfoRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<HTMLDivElement>(null);
@@ -14,18 +22,23 @@ export default function Contact() {
     
     // Load Google Maps API
     const loadGoogleMapsScript = () => {
+      // Check if the map container exists in the DOM before loading the script
+      if (!document.getElementById('google-map')) return;
+      
       const googleMapsScript = document.createElement('script');
       googleMapsScript.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBCTsFGP5PcNt2U7ZvZbQT-fYM63QLyFJc&callback=initMap`;
       googleMapsScript.async = true;
       googleMapsScript.defer = true;
-      window.document.body.appendChild(googleMapsScript);
       
+      // Define the callback function for Google Maps
       window.initMap = function() {
         const mapElement = document.getElementById('google-map');
         if (mapElement) {
           // New York coordinates as example
           const location = { lat: 40.7128, lng: -74.0060 };
-          const map = new google.maps.Map(mapElement, {
+          
+          // Create the map with custom styling
+          const map = new window.google.maps.Map(mapElement, {
             zoom: 15,
             center: location,
             styles: [
@@ -91,12 +104,12 @@ export default function Contact() {
           });
           
           // Custom marker icon
-          const marker = new google.maps.Marker({
+          const marker = new window.google.maps.Marker({
             position: location,
             map: map,
             title: "Rustic Table Restaurant",
             icon: {
-              path: google.maps.SymbolPath.CIRCLE,
+              path: window.google.maps.SymbolPath.CIRCLE,
               scale: 10,
               fillColor: "#C5553D",
               fillOpacity: 1,
@@ -106,7 +119,7 @@ export default function Contact() {
           });
           
           // Info window
-          const infoWindow = new google.maps.InfoWindow({
+          const infoWindow = new window.google.maps.InfoWindow({
             content: `
               <div style="font-family: 'Source Sans 3', sans-serif; color: #2D2620; padding: 8px;">
                 <div style="font-weight: bold; font-size: 14px; margin-bottom: 4px;">Rustic Table</div>
@@ -120,6 +133,9 @@ export default function Contact() {
           });
         }
       };
+      
+      // Add the script to the document
+      document.body.appendChild(googleMapsScript);
     };
     
     loadGoogleMapsScript();
@@ -213,7 +229,9 @@ export default function Contact() {
     
     return () => {
       // Clean up by removing the callback
-      delete window.initMap;
+      if (window.initMap) {
+        delete window.initMap;
+      }
     };
   }, []);
   
