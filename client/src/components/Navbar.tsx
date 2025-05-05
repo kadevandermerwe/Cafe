@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Utensils } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { gsap } from "gsap";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -9,6 +10,31 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
+    // Create logo animation
+    const logoAnimation = () => {
+      gsap.fromTo(
+        ".logo-text", 
+        { opacity: 0, y: -20 },
+        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }
+      );
+      
+      gsap.fromTo(
+        ".nav-item", 
+        { opacity: 0, y: -10 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          duration: 0.5, 
+          stagger: 0.1,
+          ease: "power2.out",
+          delay: 0.3
+        }
+      );
+    };
+    
+    logoAnimation();
+    
+    // Handle scroll behavior
     const handleScroll = () => {
       if (window.scrollY > 10) {
         setScrolled(true);
@@ -30,96 +56,179 @@ export default function Navbar() {
     return location === path ? "active" : "";
   };
 
+  // Menu overlay transition variants
+  const menuVariants = {
+    closed: {
+      opacity: 0,
+      height: 0,
+      transition: {
+        duration: 0.4,
+        ease: [0.33, 1, 0.68, 1],
+      }
+    },
+    open: {
+      opacity: 1,
+      height: "auto",
+      transition: {
+        duration: 0.5,
+        ease: [0.33, 1, 0.68, 1],
+      }
+    }
+  };
+  
+  // Menu items staggered animation
+  const menuItemVariants = {
+    closed: {
+      opacity: 0,
+      y: -15,
+      transition: {
+        duration: 0.2,
+      }
+    },
+    open: (i: number) => ({
+      opacity: 1,
+      y: 0,
+      transition: {
+        delay: i * 0.1,
+        duration: 0.4,
+      }
+    })
+  };
+
   return (
-    <header className={`fixed w-full bg-[#F7F3E8] z-50 transition-all duration-300 ${scrolled ? "shadow-md bg-opacity-95" : ""}`}>
-      <nav className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex justify-between items-center">
-          <Link href="/" className="text-2xl handwritten text-[#C97C5D]">
-            Rustic Table
+    <header className={`fixed w-full z-50 transition-all duration-500 ${
+      scrolled 
+        ? "py-2 backdrop-blur-md bg-background/80 shadow-md" 
+        : "py-4 bg-transparent"
+    }`}>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <nav className="flex justify-between items-center">
+          {/* Logo */}
+          <Link href="/">
+            <div className="flex items-center gap-2 group">
+              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white overflow-hidden shadow-md transition-all duration-300 group-hover:shadow-lg">
+                <Utensils className="w-5 h-5 transition-all duration-500 group-hover:rotate-12" />
+              </div>
+              <div className="logo-text">
+                <span className="handwritten text-2xl text-primary">Rustic</span>
+                <span className="elegant text-xl tracking-widest ml-1 text-accent">TABLE</span>
+              </div>
+            </div>
           </Link>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Link href="/" className={`nav-link font-medium ${isActive("/")}`}>
+          <div className="hidden md:flex items-center gap-8">
+            <Link href="/" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium ${isActive("/")}`}>
               Home
             </Link>
-            <Link href="/menu" className={`nav-link font-medium ${isActive("/menu")}`}>
+            <Link href="/menu" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium ${isActive("/menu")}`}>
               Menu
             </Link>
-            <Link href="/about" className={`nav-link font-medium ${isActive("/about")}`}>
+            <Link href="/about" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium ${isActive("/about")}`}>
               About
             </Link>
-            <Link href="/contact" className={`nav-link font-medium ${isActive("/contact")}`}>
+            <Link href="/contact" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium ${isActive("/contact")}`}>
               Contact
             </Link>
             <a 
               href="#book" 
-              className="bg-[#C97C5D] hover:bg-[#722F37] text-white px-5 py-2 rounded-lg transition-all duration-300"
+              className="nav-item button-primary group relative overflow-hidden"
             >
-              Book a Table
+              <span className="relative z-10">Book a Table</span>
+              <span className="absolute inset-0 translate-y-full bg-accent transition-transform duration-300 group-hover:translate-y-0"></span>
             </a>
           </div>
           
           {/* Mobile Menu Button */}
-          <button 
-            className="md:hidden text-[#333333] focus:outline-none"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          >
-            {isMenuOpen ? (
-              <X className="w-6 h-6" />
-            ) : (
-              <Menu className="w-6 h-6" />
-            )}
-          </button>
-        </div>
+          <div className="md:hidden">
+            <button 
+              className="w-10 h-10 flex items-center justify-center rounded-full bg-muted focus:outline-none transition-colors duration-300"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            >
+              <AnimatePresence mode="wait">
+                {isMenuOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -45, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 45, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <X className="w-5 h-5 text-primary" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="open"
+                    initial={{ rotate: 45, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -45, opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <Menu className="w-5 h-5 text-foreground" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </button>
+          </div>
+        </nav>
         
         {/* Mobile Navigation */}
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="md:hidden mt-4 pb-4"
+              variants={menuVariants}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              className="md:hidden overflow-hidden"
             >
-              <div className="flex flex-col space-y-3">
-                <Link 
-                  href="/" 
-                  className="py-2 px-4 rounded hover:bg-[#C97C5D] hover:text-white transition-all duration-300"
+              <div className="pt-6 pb-6 space-y-3">
+                {[
+                  { text: "Home", href: "/" },
+                  { text: "Menu", href: "/menu" },
+                  { text: "About", href: "/about" },
+                  { text: "Contact", href: "/contact" },
+                ].map((item, i) => (
+                  <motion.div 
+                    key={item.text}
+                    custom={i}
+                    variants={menuItemVariants}
+                    initial="closed"
+                    animate="open"
+                    exit="closed"
+                  >
+                    <Link 
+                      href={item.href} 
+                      className={`block py-3 px-4 rounded-lg text-center ${
+                        location === item.href
+                          ? "bg-primary text-white font-medium"
+                          : "bg-muted hover:bg-primary/10 transition-colors duration-300"
+                      }`}
+                    >
+                      {item.text}
+                    </Link>
+                  </motion.div>
+                ))}
+                <motion.div
+                  custom={4}
+                  variants={menuItemVariants}
+                  initial="closed"
+                  animate="open"
+                  exit="closed"
                 >
-                  Home
-                </Link>
-                <Link 
-                  href="/menu" 
-                  className="py-2 px-4 rounded hover:bg-[#C97C5D] hover:text-white transition-all duration-300"
-                >
-                  Menu
-                </Link>
-                <Link 
-                  href="/about" 
-                  className="py-2 px-4 rounded hover:bg-[#C97C5D] hover:text-white transition-all duration-300"
-                >
-                  About
-                </Link>
-                <Link 
-                  href="/contact" 
-                  className="py-2 px-4 rounded hover:bg-[#C97C5D] hover:text-white transition-all duration-300"
-                >
-                  Contact
-                </Link>
-                <a 
-                  href="#book" 
-                  className="bg-[#C97C5D] text-white py-2 px-4 rounded-lg text-center"
-                >
-                  Book a Table
-                </a>
+                  <a 
+                    href="#book" 
+                    className="block py-3 px-4 rounded-lg text-center bg-primary text-white shadow-md hover:shadow-lg transition-all duration-300"
+                  >
+                    Book a Table
+                  </a>
+                </motion.div>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
-      </nav>
+      </div>
     </header>
   );
 }
