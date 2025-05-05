@@ -68,8 +68,8 @@ export default function Menu() {
       {
         id: 1,
         name: "Rustic Bruschetta",
-        description: "Grilled artisanal bread rubbed with garlic, topped with heirloom tomatoes, extra virgin olive oil, flaky sea salt, and fresh basil from our garden.",
-        price: "$12",
+        description: "Grilled artisanal bread rubbed with garlic, topped with heritage tomatoes, extra virgin olive oil, flaky sea salt, and fresh basil from our garden.",
+        price: "£10",
         image: "https://images.unsplash.com/photo-1625944525533-473dc8c3c54b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
         featured: true
       },
@@ -77,21 +77,21 @@ export default function Menu() {
         id: 2,
         name: "Wild Mushroom Arancini",
         description: "Hand-crafted risotto balls with locally foraged mushrooms, stuffed with fontina cheese, lightly fried and served with truffle aioli.",
-        price: "$14",
+        price: "£12",
         image: "https://images.unsplash.com/photo-1559737558-2f5a35f4523b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80"
       },
       {
         id: 3,
         name: "Grass-Fed Beef Carpaccio",
         description: "Thinly sliced raw beef from local pastures, drizzled with cold-pressed olive oil, fresh lemon juice, topped with wild capers and 24-month aged Parmesan.",
-        price: "$16",
+        price: "£14",
         image: "https://images.unsplash.com/photo-1607355739828-0bf365440db5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80"
       },
       {
         id: 4,
         name: "Heritage Caprese",
-        description: "Handmade burrata, heirloom tomatoes, and sweet basil, finished with aged balsamic reduction and Ligurian olive oil.",
-        price: "$13",
+        description: "Handmade burrata, heritage tomatoes, and sweet basil, finished with aged balsamic reduction and Ligurian olive oil.",
+        price: "£11",
         image: "https://images.unsplash.com/photo-1601315379719-56d8190159c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80"
       }
     ],
@@ -100,29 +100,29 @@ export default function Menu() {
         id: 5,
         name: "Cedar-Planked Salmon",
         description: "Wild-caught Atlantic salmon, slow-roasted on cedar wood, with preserved lemon dill sauce, served with seasonal root vegetables and herb-infused potato purée.",
-        price: "$28",
+        price: "£24",
         image: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
         featured: true
       },
       {
         id: 6,
         name: "12-Hour Braised Short Ribs",
-        description: "Slow-cooked grass-fed beef short ribs in a rich red wine reduction with rosemary and thyme, served with stone-ground creamy polenta and glazed heirloom carrots.",
-        price: "$32",
+        description: "Slow-cooked grass-fed beef short ribs in a rich red wine reduction with rosemary and thyme, served with stone-ground creamy polenta and glazed heritage carrots.",
+        price: "£28",
         image: "https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80"
       },
       {
         id: 7,
         name: "Foraged Mushroom Risotto",
         description: "Slowly stirred Carnaroli rice with a medley of seasonal wild mushrooms, finished with 24-month aged Parmesan and white truffle oil.",
-        price: "$24",
+        price: "£20",
         image: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80"
       },
       {
         id: 8,
         name: "Heritage Herb-Roasted Chicken",
         description: "Free-range chicken from local farms, slow-roasted with fresh herb bundle, served with confit garlic mashed potatoes and seasonal vegetables.",
-        price: "$26",
+        price: "£22",
         image: "https://images.unsplash.com/photo-1532550907401-a500c9a57435?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80"
       }
     ],
@@ -131,7 +131,7 @@ export default function Menu() {
         id: 9,
         name: "Classic Tiramisu",
         description: "Handcrafted Italian dessert with layers of espresso-soaked ladyfingers and mascarpone cream, dusted with Valrhona cocoa powder.",
-        price: "$10",
+        price: "£8",
         image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
         featured: true
       },
@@ -139,7 +139,7 @@ export default function Menu() {
         id: 10,
         name: "Dark Chocolate Lava Cake",
         description: "Warm 70% single-origin chocolate cake with a molten center, served with house-made vanilla bean ice cream and seasonal berries.",
-        price: "$12",
+        price: "£10",
         image: "https://images.unsplash.com/photo-1579306194872-64d3b7bac4c2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80"
       }
     ],
@@ -147,8 +147,8 @@ export default function Menu() {
       {
         id: 11,
         name: "Rustic Old Fashioned",
-        description: "Our signature take on the classic cocktail with small-batch bourbon, house-made aromatic bitters, and orange peel, served over hand-cut ice.",
-        price: "$14",
+        description: "Our signature take on the classic cocktail with small-batch whisky, house-made aromatic bitters, and orange peel, served over hand-cut ice.",
+        price: "£12",
         image: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80",
         featured: true
       },
@@ -156,7 +156,7 @@ export default function Menu() {
         id: 12,
         name: "Garden Elderflower Spritz",
         description: "Refreshing spritz with St. Germain elderflower liqueur, organic prosecco, and sparkling water, garnished with fresh edible flowers and herbs.",
-        price: "$13",
+        price: "£11",
         image: "https://images.unsplash.com/photo-1536935338788-846bb9981813?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=300&q=80"
       }
     ]
