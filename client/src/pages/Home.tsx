@@ -324,26 +324,26 @@ export default function Home() {
       </section>
       
       {/* Schedule banner */}
-      <section className="bg-accent/5 border-y border-border/50 py-10 my-10">
+      <section className="bg-accent/5 border-y border-border/50 py-12">
         <div className="container mx-auto px-6 sm:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="text-center md:text-left">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="text-center md:text-left md:min-w-[200px]">
               <h3 className="font-serif text-2xl mb-2">Opening Hours</h3>
               <p className="text-foreground/70">We look forward to serving you</p>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 text-center w-full">
               {[
                 { day: "Mon-Thu", hours: "5:00 PM - 10:00 PM" },
                 { day: "Fri-Sat", hours: "5:00 PM - 11:00 PM" },
                 { day: "Sunday", hours: "4:00 PM - 9:00 PM" },
                 { day: "Brunch", hours: "Sat-Sun, 10 AM - 2 PM" }
               ].map((schedule) => (
-                <div key={schedule.day} className="flex flex-col items-center">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mb-2">
-                    <Clock className="w-5 h-5 text-primary" />
+                <div key={schedule.day} className="flex flex-col items-center bg-background/50 p-4 rounded-lg shadow-sm">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3">
+                    <Clock className="w-6 h-6 text-primary" />
                   </div>
-                  <div className="font-medium">{schedule.day}</div>
+                  <div className="font-medium text-lg">{schedule.day}</div>
                   <div className="text-sm text-foreground/70">{schedule.hours}</div>
                 </div>
               ))}
