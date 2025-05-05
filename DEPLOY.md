@@ -1,60 +1,96 @@
 # Deployment Guide
 
-This document provides instructions for deploying the Restaurant Website to various platforms, with a focus on database-free deployment for portfolio demonstration purposes.
+This document provides detailed instructions for deploying the restaurant website in various environments.
 
-## Database-Free Deployment
+## Deployment Options
 
-The website is designed to work without requiring a database connection, making it ideal for portfolio demonstration purposes. All data is stored in memory, simulating a full-featured restaurant website without the overhead of database setup.
+### Option 1: Database-Free Deployment (Recommended for Portfolios)
 
-### Deployment on Render.com
+This is the simplest deployment method, ideal for portfolio demonstrations. It uses in-memory storage to simulate database functionality without requiring an actual database connection.
 
-1. Fork or push this repository to GitHub, GitLab, or any Git provider supported by Render.
-2. In Render, create a new Web Service and connect to your repository.
-3. Configure the service with the following settings:
+#### Using Render.com
 
-   - **Name**: `restaurant-website` (or any name you prefer)
-   - **Environment**: `Node`
-   - **Build Command**: `./deploy-no-database.sh`
-   - **Start Command**: `NODE_ENV=production node dist/index.js`
+1. **Fork or clone the repository** to your GitHub account
+2. **Connect to Render.com**:
+   - Sign up/login to [Render](https://render.com)
+   - Create a new Web Service and connect your repository
+   - Configure as follows:
+     - **Build Command**: `./render-scripts/build.sh`
+     - **Start Command**: `./render-scripts/start.sh`
+     - **Environment Variables**:
+       - Key: `FORCE_IN_MEMORY` Value: `true`
+       - Key: `DATABASE_URL` Value: `postgresql://placeholder:placeholder@localhost:5432/placeholder`
+     - **Plan**: Free tier works fine
 
-4. Click "Create Web Service" and wait for the deployment to complete.
+3. **Deploy**:
+   - Click "Create Web Service"
+   - Render will automatically build and deploy your application
 
-The `deploy-no-database.sh` script handles all the necessary configuration to ensure the website works without a database connection.
+#### Manual Deployment
 
-### Verifying Deployment
+If you're deploying to another platform or your own server:
 
-Once deployed, your website should function fully, including:
-- Home page with restaurant information
-- Menu page with food categories and items
-- About page with restaurant story
-- Contact page with map and contact form
-- Booking page with reservation functionality
+1. **Prepare the application**:
+   ```bash
+   # Run the deployment script to build and patch the application
+   chmod +x ./deploy-no-database.sh
+   ./deploy-no-database.sh
+   ```
 
-All features will work as expected, storing data in memory for the duration of the server process.
+2. **Deploy the application**:
+   - The `/dist` directory now contains the fully built application
+   - Upload these files to your hosting provider
+   - Ensure your server starts the application with: `NODE_ENV=production node dist/index.js`
+   - Set the environment variable `FORCE_IN_MEMORY=true`
 
-## Using with a Real Database (Optional)
+### Option 2: With Database (Optional)
 
-If you want to use the website with a real database for persistent data storage:
+If you want persistent data storage:
 
-1. Set up a PostgreSQL database (Render.com offers this service).
-2. Add a `DATABASE_URL` environment variable in your deployment settings, pointing to your PostgreSQL database.
-3. The application will automatically detect the database connection and use it instead of in-memory storage.
+1. **Set up a PostgreSQL database**:
+   - Create a new PostgreSQL database instance
+   - Note the connection string in the format: `postgresql://username:password@hostname:port/database`
 
+2. **Deploy with database connection**:
+   - Follow the same steps as Option 1, but:
+     - Set `FORCE_IN_MEMORY=false` (or omit this variable)
+     - Set `DATABASE_URL` to your actual PostgreSQL connection string
+
+3. **Initialize the database**:
+   - The application will automatically create the necessary tables on first run
+
+## Verifying Deployment
+
+After deployment:
+
+1. **Check the application logs** to ensure proper startup
+2. **Visit the website** and verify all features function correctly
+3. **Test the booking system** to ensure it properly saves reservations
+   
 ## Troubleshooting
 
-If you encounter issues with the deployment:
+### Common Issues
 
-1. Check the logs in Render.com to see any error messages.
-2. Ensure the `deploy-no-database.sh` script is executable (`chmod +x deploy-no-database.sh`).
-3. Verify that the scripts in this repository haven't been modified in a way that would affect the deployment process.
+**Error: DATABASE_URL must be set**
+- Make sure you've set the `FORCE_IN_MEMORY=true` environment variable
+- If using database mode, ensure your `DATABASE_URL` is correct and accessible
 
-## Notes for Portfolio Use
+**Application starts but shows blank page**
+- Check browser console for JavaScript errors
+- Verify that all assets loaded properly
 
-This website is ideal for demonstrating your full-stack development skills as part of a portfolio:
+**Booking system doesn't save reservations**
+- In database-free mode, this is normal - data is stored in memory and will reset on server restart
+- If using a database, check database connectivity and permissions
 
-- The frontend showcases React, TypeScript, and modern CSS skills
-- The booking system demonstrates interactive form handling
-- The in-memory storage demonstrates understanding of server-side architecture
-- The responsive design shows mobile-first development approach
+## Maintenance
 
-Feel free to customize the content, styling, and functionality to showcase your unique skills and preferences.
+To update an existing deployment:
+
+1. Push changes to your repository
+2. Render.com will automatically rebuild and redeploy
+3. For manual deployments, run the deployment script again and upload the new files
+
+---
+
+If you encounter any issues not covered in this guide, please open an issue on the repository.

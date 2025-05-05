@@ -1,40 +1,53 @@
-// Simple patch script to modify the built files to work without a database
+/**
+ * This script patches the built files for deployment without database requirement.
+ * It modifies dist/index.js to remove the DATABASE_URL requirement.
+ */
+
 const fs = require('fs');
 const path = require('path');
 
-console.log('Applying memory-only mode patch for deployment...');
+console.log('Starting deployment patching process...');
 
 // Path to the built server file
-const distIndexPath = path.join(__dirname, 'dist', 'index.js');
+const serverFilePath = path.resolve(__dirname, 'dist', 'index.js');
 
-if (!fs.existsSync(distIndexPath)) {
-  console.error(`Error: Built file not found at ${distIndexPath}`);
-  console.error('Run "npm run build" first before running this patch script.');
+// Check if file exists
+if (!fs.existsSync(serverFilePath)) {
+  console.error('Error: Built server file not found at', serverFilePath);
+  console.error('Did you run "npm run build" first?');
   process.exit(1);
 }
 
-try {
-  let content = fs.readFileSync(distIndexPath, 'utf8');
+// Read the file content
+console.log('Reading built server file...');
+let content = fs.readFileSync(serverFilePath, 'utf8');
+
+// Find and replace the DATABASE_URL check if present
+if (content.includes('DATABASE_URL must be set')) {
+  console.log('Removing DATABASE_URL requirement...');
   
-  // Replace any code that throws an error for missing DATABASE_URL
-  // with code that uses in-memory storage instead
-  const originalPattern = 'if (!process.env.DATABASE_URL) {';
-  const replacement = 'if (false) { // Always use in-memory for deployment';
+  // Create a pattern to match the DATABASE_URL check and error throwing
+  const pattern = /if\s*\(\s*!\s*process\.env\.DATABASE_URL\s*\)\s*\{\s*throw new Error\(\s*(['"])DATABASE_URL must be set[^]*?\)\s*;\s*\}/g;
   
-  if (content.includes(originalPattern)) {
-    content = content.replace(originalPattern, replacement);
-    fs.writeFileSync(distIndexPath, content, 'utf8');
-    console.log('Successfully patched dist/index.js to work without a database!');
+  // Replace with a simple log indicating in-memory mode
+  const replacement = 'console.log("DEPLOYMENT: Using in-memory storage mode");';
+  
+  // Perform the replacement
+  const newContent = content.replace(pattern, replacement);
+  
+  // Check if replacement was successful
+  if (newContent === content) {
+    console.warn('Warning: Could not find DATABASE_URL check pattern. The file may have changed or already been patched.');
   } else {
-    console.log('No need to patch - the file does not contain DATABASE_URL check.');
+    console.log('Replacement successful!');
+    content = newContent;
   }
-
-  // Create .env file to ensure in-memory mode is used
-  fs.writeFileSync('.env', 'FORCE_IN_MEMORY=true\n', 'utf8');
-  console.log('Created .env file with FORCE_IN_MEMORY=true');
-  
-  console.log('Patch complete! The application will now use in-memory storage.');
-} catch (error) {
-  console.error('Error patching file:', error);
-  process.exit(1);
+} else {
+  console.log('No DATABASE_URL requirement found. File may already be patched.');
 }
+
+// Write the modified content back to the file
+console.log('Writing updated file...');
+fs.writeFileSync(serverFilePath, content, 'utf8');
+
+console.log('Deployment patch completed successfully!');
