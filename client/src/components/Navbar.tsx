@@ -98,8 +98,8 @@ export default function Navbar() {
   return (
     <header className={`fixed w-full z-50 transition-all duration-500 ${
       scrolled 
-        ? "py-2 backdrop-blur-md bg-background/80 shadow-md" 
-        : "py-4 bg-transparent"
+        ? "py-2 backdrop-blur-md bg-background/90 shadow-lg border-b border-white/10" 
+        : "py-4 bg-black/30 backdrop-blur-sm"
     }`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <nav className="flex justify-between items-center">
@@ -118,16 +118,16 @@ export default function Navbar() {
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            <Link href="/" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium ${isActive("/")}`}>
+            <Link href="/" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium text-white shadow-sm ${isActive("/")}`}>
               Home
             </Link>
-            <Link href="/menu" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium ${isActive("/menu")}`}>
+            <Link href="/menu" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium text-white shadow-sm ${isActive("/menu")}`}>
               Menu
             </Link>
-            <Link href="/about" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium ${isActive("/about")}`}>
+            <Link href="/about" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium text-white shadow-sm ${isActive("/about")}`}>
               About
             </Link>
-            <Link href="/contact" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium ${isActive("/contact")}`}>
+            <Link href="/contact" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium text-white shadow-sm ${isActive("/contact")}`}>
               Contact
             </Link>
             <a 

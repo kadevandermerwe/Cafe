@@ -229,9 +229,7 @@ export default function Contact() {
     
     return () => {
       // Clean up by removing the callback
-      if (window.initMap) {
-        delete window.initMap;
-      }
+      window.initMap = undefined;
     };
   }, []);
   

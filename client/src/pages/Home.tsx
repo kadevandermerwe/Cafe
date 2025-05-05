@@ -135,7 +135,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              className="text-5xl md:text-7xl font-serif font-bold mb-6 text-shadow"
+              className="text-5xl md:text-7xl font-serif font-bold mb-6 text-shadow-strong"
             >
               <span className="inline-block">Rustic</span>{" "}
               <span className="elegant tracking-widest font-normal">TABLE</span>
@@ -152,7 +152,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6, ease: "easeOut" }}
-              className="text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed text-shadow"
+              className="text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed text-shadow-strong"
             >
               Experience fine dining in a warm, inviting atmosphere. Our chefs craft seasonal dishes using locally-sourced ingredients to create unforgettable culinary experiences.
             </motion.p>
