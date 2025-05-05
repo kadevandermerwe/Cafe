@@ -98,8 +98,8 @@ export default function Navbar() {
   return (
     <header className={`fixed w-full z-50 transition-all duration-500 ${
       scrolled 
-        ? "py-2 backdrop-blur-md bg-background/90 shadow-lg border-b border-white/10" 
-        : "py-4 bg-black/30 backdrop-blur-sm"
+        ? "py-2 backdrop-blur-md bg-background/95 shadow-lg border-b border-white/10 text-foreground" 
+        : "py-4 bg-black/30 backdrop-blur-sm text-white"
     }`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <nav className="flex justify-between items-center">
@@ -111,23 +111,23 @@ export default function Navbar() {
               </div>
               <div className="logo-text">
                 <span className="handwritten text-2xl text-primary">Rustic</span>
-                <span className="elegant text-xl tracking-widest ml-1 text-accent">TABLE</span>
+                <span className="elegant text-xl tracking-widest ml-1 text-accent text-shadow-strong">TABLE</span>
               </div>
             </div>
           </Link>
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
-            <Link href="/" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium text-white shadow-sm ${isActive("/")}`}>
+            <Link href="/" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium ${scrolled ? 'text-foreground' : 'text-white shadow-sm'} ${isActive("/")}`}>
               Home
             </Link>
-            <Link href="/menu" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium text-white shadow-sm ${isActive("/menu")}`}>
+            <Link href="/menu" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium ${scrolled ? 'text-foreground' : 'text-white shadow-sm'} ${isActive("/menu")}`}>
               Menu
             </Link>
-            <Link href="/about" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium text-white shadow-sm ${isActive("/about")}`}>
+            <Link href="/about" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium ${scrolled ? 'text-foreground' : 'text-white shadow-sm'} ${isActive("/about")}`}>
               About
             </Link>
-            <Link href="/contact" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium text-white shadow-sm ${isActive("/contact")}`}>
+            <Link href="/contact" className={`nav-item nav-link text-sm uppercase tracking-wider font-medium ${scrolled ? 'text-foreground' : 'text-white shadow-sm'} ${isActive("/contact")}`}>
               Contact
             </Link>
             <a 

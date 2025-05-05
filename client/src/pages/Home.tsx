@@ -126,7 +126,7 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="block handwritten text-3xl md:text-4xl text-secondary mb-2"
+              className="block handwritten text-3xl md:text-4xl text-secondary mb-2 text-shadow-strong"
             >
               Welcome to
             </motion.span>
