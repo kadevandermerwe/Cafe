@@ -27,7 +27,7 @@ export default function Layout({ children }: LayoutProps) {
       <div className="fixed inset-0 bg-paper opacity-30 pointer-events-none z-[-1]"></div>
       
       <Navbar />
-      <main className="flex-grow relative z-10">
+      <main className="flex-grow relative z-10 pt-16">
         {children}
       </main>
       <Footer />

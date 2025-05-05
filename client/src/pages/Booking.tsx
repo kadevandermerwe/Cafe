@@ -3,7 +3,7 @@ import { CheckCircle2, CalendarRange, Clock, MapPin, Users } from "lucide-react"
 
 export default function Booking() {
   return (
-    <div className="container mx-auto px-4 py-12">
+    <div className="container mx-auto px-4 pt-24 pb-12">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4">Table Reservations</h1>
         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
