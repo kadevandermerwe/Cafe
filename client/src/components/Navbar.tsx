@@ -111,7 +111,7 @@ export default function Navbar() {
               </div>
               <div className="logo-text">
                 <span className="handwritten text-2xl text-primary">Rustic</span>
-                <span className="elegant text-xl tracking-widest ml-1 text-accent text-shadow-strong">TABLE</span>
+                <span className={`elegant text-xl tracking-widest ml-1 font-semibold ${scrolled ? 'text-foreground' : 'text-white text-shadow'}`}>TABLE</span>
               </div>
             </div>
           </Link>
